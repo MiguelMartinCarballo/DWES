@@ -4,13 +4,6 @@ $miarray = ['a' => "hola", 'b' => 25, 'c' => [1, 3, 5]];
 $infoguardar = serialize($miarray);
 
 
-$infojson = json_encode($miarray);
-echo "Codificacion del array en json: " . $infojson;
-
-$infodecode = json_decode($infojson);
-echo "<br>Decodificacion delarray en json: ". $infodecode;
-
-/*
 //definir una cookie
 //setcookie("primeracookie", "aceptado",time()+(24*60*60)); //un dia
 setcookie("primeracookie", $infoguardar, strtotime("+1 minute"));
@@ -29,5 +22,3 @@ var_dump($infojson);
 
 //eliminar cookie
 //setcookie("primeracookie", "aceptado", time()-120);
-
-*/

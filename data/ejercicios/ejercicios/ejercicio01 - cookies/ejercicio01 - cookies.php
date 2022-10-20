@@ -6,14 +6,21 @@
             $idioma = "Español";
         }
         setcookie("idioma", $idioma, strtotime("+60 minute"));
+
+        $marca = $_GET["marca"];
+        if (!empty($marca)) {
+            setcookie("marca", $marca, strtotime("+60 minute"));
+        }
+
+
         switch($idioma){
-            case "Español":
+            case "ESP":
                 echo "Bienvenido querido usuario.";
             break;
-            case "Inglés":
+            case "ING":
                 echo "Welcome dear user.";
             break;
-            case "Alemán":
+            case "ALE":
                 echo "Willkommen Sehr geehrter Nutzer.";
             break;
         }
