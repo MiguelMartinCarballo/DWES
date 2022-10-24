@@ -1,7 +1,8 @@
 <?php
 
-$idioma = $_COOKIE["idioma"];
-$marca = $_COOKIE["marca"];
+if(isset($_COOKIE["idioma"]) && isset($_COOKIE["marca"])){
+    $idioma = $_COOKIE["idioma"];
+    $marca = $_COOKIE["marca"];
 
     switch($idioma){
         case "ESP":
@@ -32,3 +33,9 @@ $marca = $_COOKIE["marca"];
     } else {
         echo "No has elegido ninguna marca.";
     }
+}else{
+    setcookie("idioma",'',time() - 72000);
+    setcookie("marca",'',time() - 72000);
+    echo "<h3>Debe seleccionar algunos datos</h3>";
+    echo "<a href=\"ejercicio01formulario.html\">Volver al inicio</a>";
+}
