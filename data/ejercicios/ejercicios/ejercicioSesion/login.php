@@ -1,68 +1,67 @@
-<!--
-    Crear un entorno de login
-
-    - La pagina de login : usuario y password
-
-        - usuario = usuario
-          password = 1234 => ok , rol = 0
-
-        - usuario = admin
-          passsword = 4567 => ok , rol = 1
-    
-        - Si no => muestre mensaje login erroneo
-
-    - Si login ok => principal.php . Bienvenido usuario
-        - Enlace logout.php
-    
-    - Logout.php => cerrar la sesion y enlace/redireccion a login.php
-
--->
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h1>Login:</h1>
-    <form name="miformu" action="ejercicio01cookies.php" method="post">
-        <p>
-        <label for="usuario">Usuario</label>
-        <input type="text" name="usuario" id="usuario" value="usuario">
-        </p>
-        <br>
-        <p>
-        <label for="pw">Contraseña</label>
-        <input type="text" name="pw" id="pw" value="pw">
-        </p>
-
-        <br>
-        <input type="submit" name="envio" id="envio" value="Entrar">
-    </form>
-</body>
-
-</html>
-
 <?php
+//usuario |  1234
+//admin   |  4567
+function comprobarcredenciales($nombreusu, $clave)
+{
+  if ($nombreusu === "usuario" && $clave === "1234") {
+    $credenciales["nombreusu"] = "usuario";
+    $credenciales["rol"] = 0;
+    return $credenciales;
+  }
+  if ($nombreusu === "admin" && $clave === "4567") {
+    $credenciales["nombreusu"] = "admin";
+    $credenciales["rol"] = 1;
+    return $credenciales;
+  }
+  return false;
+}
 
-session_start();
-
-if (isset($_POST['envio'])) {
-  $usuario = $_POST["usuario"];
-  $pw = $_POST["pw"];
-  if (!empty($usuario) && !empty($pw)) {
-    if($usuario == "usuario" && $pw == "1234"){
-      if (!isset($_SESSION["contador"])) {
-        $_SESSION["contador"] = 0;
-      }
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+  if(isset($_POST["envio"])){
+    $credentials = comprobarcredenciales($_POST["usuario"], $_POST["pw"]);
+    if($credentials === false){
+      $error = 1;
+    }else{
+      session_start();
+      $_SESSION["usuariook"] = $credentials;
+      header("Location: principal.php");
+      exit();
     }
   }
 }
 
+?>
 
-session_start();
+<!DOCTYPE html>
 
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Login:</h1>
+  <?php
+    if(isset($error) && $error == 1){
+      echo "<p><font color=\"red\">Credenciales inválidas.</font></p>";
+    }
+  ?>
+  <form name="miformu" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+    <p>
+      <label for="usuario">Usuario</label>
+      <input type="text" name="usuario" id="usuario">
+    </p>
+    <p>
+      <label for="pw">Contraseña</label>
+      <input type="text" name="pw" id="pw">
+    </p>
+    <br>
+    <input type="submit" name="envio" id="envio" value="Entrar">
+  </form>
+
+</body>
+
+</html>
