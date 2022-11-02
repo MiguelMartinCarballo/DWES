@@ -13,10 +13,9 @@
   <br><br>
   <h3><a href="?method=borrar">Borrar fondo y cookie </a></h3>
 
-
   <?php
-    if(isset($_COOKIE["color"])){
-      echo "<body style='background-color: " . $_COOKIE["color"] . " '>";
+    if(isset($_SESSION["color"])){
+      echo "<body style='background-color: " . $_SESSION["color"] . " '>";
     }
   ?>
 </body>

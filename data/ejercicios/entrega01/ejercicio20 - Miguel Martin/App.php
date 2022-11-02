@@ -2,6 +2,12 @@
 
 class App
 {
+
+  public function __construct()
+  {
+    session_start();    
+  }
+
   public function run()
   {
     if (isset($_GET['method'])) {
@@ -9,7 +15,7 @@ class App
     } else {
       $method = 'home';
     }
-
+  
     $this->$method();
   }
 
@@ -26,14 +32,16 @@ class App
   public function cambio()
   {
     $color = $_GET['color'];
-    setcookie("color", $color, strtotime("+60 minute"));
+    $_SESSION["color"] = $color;
     header("Location: ?method=home");
   }
 
   public function borrar()
   {
-    if (isset($_COOKIE["color"])) {
-      setcookie("color", "", time() -7000);
+    if (isset($_SESSION["color"])) {
+      $_SESSION = array();
+      session_destroy();
+      setcookie(session_name(),'', time()-7200, '/');
     }
     header("Location: ?method=home");
   }
