@@ -29,6 +29,6 @@ class App
   public function cambio()
   {
     $color = $_GET['color'];
-    setcookie("color", $color, time();
+    setcookie("color", $color, strtotime(+60 minute));
   }
 }
